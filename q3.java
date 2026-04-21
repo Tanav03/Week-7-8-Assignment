@@ -1,27 +1,27 @@
 import java.util.Scanner;
 
 public class q3 {
-    private static double calculateRounds(double side1, double side2, double side3, double distanceMeters) {
-        double perimeter = side1 + side2 + side3;
-        return Math.ceil(distanceMeters / perimeter);
+    private static boolean isLeapYear(int year) {
+        if (year < 1582) {
+            return false;
+        }
+
+        return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
     }
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("Enter side 1 in meters: ");
-        double side1 = scanner.nextDouble();
+        System.out.print("Enter a year: ");
+        int year = scanner.nextInt();
 
-        System.out.print("Enter side 2 in meters: ");
-        double side2 = scanner.nextDouble();
-
-        System.out.print("Enter side 3 in meters: ");
-        double side3 = scanner.nextDouble();
-
-        double distanceMeters = 5000.0;
-        double rounds = calculateRounds(side1, side2, side3, distanceMeters);
-
-        System.out.println("The athlete needs to complete " + (long) rounds + " rounds to complete 5 km.");
+        if (year < 1582) {
+            System.out.println("Leap year check is valid only for year 1582 or later.");
+        } else if (isLeapYear(year)) {
+            System.out.println(year + " is a Leap Year.");
+        } else {
+            System.out.println(year + " is not a Leap Year.");
+        }
 
         scanner.close();
     }
