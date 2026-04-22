@@ -1,85 +1,56 @@
-import java.util.Scanner;
+import java.util.Arrays;
+import java.util.Random;
 
 public class q1 {
-    private static int[] findFactors(int number) {
-        int target = Math.abs(number);
-        int count = 0;
+    public static int[] generateHeights(int size, int minHeight, int maxHeight) {
+        Random random = new Random();
+        int[] heights = new int[size];
 
-        for (int i = 1; i <= target; i++) {
-            if (target % i == 0) {
-                count++;
-            }
+        for (int i = 0; i < heights.length; i++) {
+            heights[i] = random.nextInt(maxHeight - minHeight + 1) + minHeight;
         }
 
-        int[] factors = new int[count];
-        int index = 0;
-
-        for (int i = 1; i <= target; i++) {
-            if (target % i == 0) {
-                factors[index++] = i;
-            }
-        }
-
-        return factors;
+        return heights;
     }
 
-    private static int sumOfFactors(int[] factors) {
+    public static int sumHeights(int[] heights) {
         int sum = 0;
-
-        for (int factor : factors) {
-            sum += factor;
+        for (int height : heights) {
+            sum += height;
         }
-
         return sum;
     }
 
-    private static long productOfFactors(int[] factors) {
-        long product = 1;
-
-        for (int factor : factors) {
-            product *= factor;
-        }
-
-        return product;
+    public static double meanHeight(int[] heights) {
+        return (double) sumHeights(heights) / heights.length;
     }
 
-    private static double sumOfSquares(int[] factors) {
-        double sum = 0;
-
-        for (int factor : factors) {
-            sum += Math.pow(factor, 2);
+    public static int shortestHeight(int[] heights) {
+        int shortest = Integer.MAX_VALUE;
+        for (int height : heights) {
+            if (height < shortest) {
+                shortest = height;
+            }
         }
+        return shortest;
+    }
 
-        return sum;
+    public static int tallestHeight(int[] heights) {
+        int tallest = Integer.MIN_VALUE;
+        for (int height : heights) {
+            if (height > tallest) {
+                tallest = height;
+            }
+        }
+        return tallest;
     }
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        int[] heights = generateHeights(11, 150, 250);
 
-        System.out.print("Enter a number: ");
-        int number = scanner.nextInt();
-
-        if (number == 0) {
-            System.out.println("Factors are not defined for zero.");
-            scanner.close();
-            return;
-        }
-
-        int[] factors = findFactors(number);
-
-        System.out.print("Factors: ");
-        for (int i = 0; i < factors.length; i++) {
-            if (i > 0) {
-                System.out.print(", ");
-            }
-            System.out.print(factors[i]);
-        }
-        System.out.println();
-
-        System.out.println("Sum of factors: " + sumOfFactors(factors));
-        System.out.println("Sum of squares of factors: " + sumOfSquares(factors));
-        System.out.println("Product of factors: " + productOfFactors(factors));
-
-        scanner.close();
+        System.out.println("Player heights (cm): " + Arrays.toString(heights));
+        System.out.println("Shortest player height: " + shortestHeight(heights) + " cm");
+        System.out.println("Tallest player height: " + tallestHeight(heights) + " cm");
+        System.out.printf("Mean player height: %.2f cm%n", meanHeight(heights));
     }
 }
